@@ -1,33 +1,13 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { StrictMode } from 'react';
-import App from './App';
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
 
-const config = {
-  red: {
-    backgroundColor: 'red',
-    duration: 4000,
-    next: 'green',
-  },
-  yellow: {
-    backgroundColor: 'yellow',
-    duration: 500,
-    next: 'red',
-  },
-  green: {
-    backgroundColor: 'green',
-    duration: 3000,
-    next: 'yellow',
-  },
-};
+import App from "./App";
 
-const rootElement = document.getElementById('root');
-ReactDOM.render(
+const rootElement = document.getElementById("root");
+const root = createRoot(rootElement);
+
+root.render(
   <StrictMode>
-    <div className="wrapper">
-      <App config={config} />
-      <App config={config} layout="horizontal" />
-    </div>
-  </StrictMode>,
-  rootElement
+    <App />
+  </StrictMode>
 );
