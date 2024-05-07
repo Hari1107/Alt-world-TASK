@@ -1,52 +1,29 @@
+import TrafficLight from "./TrafficLight";
 
-import React, { useEffect, useState } from 'react';
-import './styles.css';
+import "./styles.css";
 
-function Light({ backgroundColor }) {
+const trafficStates = {
+  red: {
+    backgroundColor: "red",
+    duration: 2000,
+    next: "yellow"
+  },
+  yellow: {
+    backgroundColor: "yellow",
+    duration: 2000,
+    next: "green"
+  },
+  green: {
+    backgroundColor: "green",
+    duration: 2000,
+    next: "red"
+  }
+};
+
+export default function App() {
   return (
-    <div
-      aria-hidden={true}
-      className="traffic-light"
-      style={{ backgroundColor }}
-    />
-  );
-}
-
-export default function TrafficLight({
-  initialColor = 'green',
-  config,
-  layout = 'vertical',
-}) {
-  const [currentColor, setCurrentColor] = useState(() => initialColor);
-
-  useEffect(() => {
-    const { duration, next } = config[currentColor];
-
-    const timerId = setTimeout(() => {
-      setCurrentColor(next);
-    }, duration);
-
-    return () => {
-      clearTimeout(timerId);
-    };
-  }, [config, currentColor]);
-
-  return (
-    <div
-      aria-live="polite"
-      aria-label={`Current light: ${currentColor}`}
-      className={`traffic-light-container ${
-        layout === 'vertical' ? 'traffic-light-container--vertical' : ''
-      }`}
-    >
-      {Object.keys(config).map((color) => (
-        <Light
-          key={color}
-          backgroundColor={
-            color === currentColor ? config[color].backgroundColor : undefined
-          }
-        />
-      ))}
+    <div className="wrapper">
+      <TrafficLight trafficStates={trafficStates} />
     </div>
   );
 }
