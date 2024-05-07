@@ -1,6 +1,4 @@
-
-import React, { useEffect, useState } from 'react';
-import './styles.css';
+import { useEffect, useState } from 'react';
 
 function Light({ backgroundColor }) {
   return (
@@ -17,7 +15,8 @@ export default function TrafficLight({
   config,
   layout = 'vertical',
 }) {
-  const [currentColor, setCurrentColor] = useState(() => initialColor);
+  const [currentColor, setCurrentColor] =
+    useState(initialColor);
 
   useEffect(() => {
     const { duration, next } = config[currentColor];
@@ -29,21 +28,26 @@ export default function TrafficLight({
     return () => {
       clearTimeout(timerId);
     };
-  }, [config, currentColor]);
+  }, [config,currentColor]);
 
   return (
     <div
       aria-live="polite"
       aria-label={`Current light: ${currentColor}`}
-      className={`traffic-light-container ${
-        layout === 'vertical' ? 'traffic-light-container--vertical' : ''
-      }`}
-    >
+      className={[
+        'traffic-light-container',
+        layout === 'vertical' &&
+          'traffic-light-container--vertical',
+      ]
+        .filter((cls) => !!cls)
+        .join(' ')}>
       {Object.keys(config).map((color) => (
         <Light
           key={color}
           backgroundColor={
-            color === currentColor ? config[color].backgroundColor : undefined
+            color === currentColor
+              ? config[color].backgroundColor
+              : undefined
           }
         />
       ))}
